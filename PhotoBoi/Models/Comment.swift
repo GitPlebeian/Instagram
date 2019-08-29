@@ -58,7 +58,7 @@ extension Comment: SearchableRecord {
 extension CKRecord {
     convenience init(comment: Comment) {
         let recordID = comment.recordID
-        self.init(recordType: CommentConstants.recordTextKey, recordID: recordID)
+        self.init(recordType: CommentConstants.recordTypeKey, recordID: recordID)
         self.setValue(comment.text, forKey: CommentConstants.recordTextKey)
         self.setValue(comment.timestamp, forKey: CommentConstants.recordTimestampKey)
         self.setValue(comment.reference, forKey: CommentConstants.recordReferenceKey)

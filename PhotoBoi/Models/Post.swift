@@ -14,6 +14,7 @@ struct PostConstants {
     static let recordTypeKey = "Post"
     static let recordCaptionKey = "caption"
     static let recordTimestampKey = "timestamp"
+    static let recordCommentCountKey = "commentCount"
     static let recordPhotoKey = "photo"
 }
 
@@ -22,6 +23,7 @@ class Post {
     var photoData: Data?
     var timestamp: Date
     var caption: String
+    var commentCount: Int
     var comments: [Comment]
     var recordID: CKRecord.ID
     var photo: UIImage? {
@@ -47,11 +49,12 @@ class Post {
         }
     }
     
-    init(photo: UIImage, caption: String, timestamp: Date = Date(), comments: [Comment] = [], recordID: CKRecord.ID = CKRecord.ID(recordName: UUID().uuidString)) {
+    init(photo: UIImage, caption: String, timestamp: Date = Date(), comments: [Comment] = [], commentCount: Int = 0, recordID: CKRecord.ID = CKRecord.ID(recordName: UUID().uuidString)) {
         self.caption = caption
         self.timestamp = timestamp
         self.comments = comments
         self.recordID = recordID
+        self.commentCount = commentCount
         self.photo = photo
     }
 }
@@ -71,11 +74,12 @@ extension Post: SearchableRecord {
 }
 
 extension CKRecord {
-    convenience init?(post: Post) {
+    convenience init(post: Post) {
         self.init(recordType: PostConstants.recordTypeKey, recordID: post.recordID)
         self.setValue(post.caption, forKey: PostConstants.recordCaptionKey)
         self.setValue(post.timestamp, forKey: PostConstants.recordTimestampKey)
         self.setValue(post.imageAsset, forKey: PostConstants.recordPhotoKey)
+        self.setValue(post.commentCount, forKey: PostConstants.recordCommentCountKey)
     }
 }
 
@@ -86,12 +90,13 @@ extension Post {
         guard let postCaption = ckRecord[PostConstants.recordCaptionKey] as? String,
             let postTimestamp = ckRecord[PostConstants.recordTimestampKey] as? Date,
             let postImageAsset = ckRecord[PostConstants.recordPhotoKey] as? CKAsset,
+            let postCommentCount = ckRecord[PostConstants.recordCommentCountKey] as? Int,
             let postImageFileURL = postImageAsset.fileURL else {return nil}
         
         do {
             let data = try Data(contentsOf: postImageFileURL)
             guard let postImage = UIImage(data: data) else {return nil}
-            self.init(photo: postImage, caption: postCaption, timestamp: postTimestamp, comments: [], recordID: ckRecord.recordID)
+            self.init(photo: postImage, caption: postCaption, timestamp: postTimestamp, comments: [], commentCount: postCommentCount, recordID: ckRecord.recordID)
             
         } catch {
             print("Error at \(#function) \(error) \(error.localizedDescription)")

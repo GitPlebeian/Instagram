@@ -31,7 +31,7 @@ class PostTableViewCell: UITableViewCell {
         
         postImage.image = post.photo
         postCaptionLabel.text = post.caption
-        postCommentsLabel.text = String(post.comments.count)
+        postCommentsLabel.text = String(post.commentCount)
         
         var commentsString = ""
         for comment in post.comments {

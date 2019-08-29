@@ -37,8 +37,10 @@ class AddPostTableViewController: UITableViewController {
         guard let caption = postCaptionTextField.text, let image = selectedImage, !caption.isEmpty else {return}
         PostController.shared.createPostWith(image: image, caption: caption) { (post) in
             guard let post = post else {return}
+            DispatchQueue.main.async {
+                self.tabBarController?.selectedIndex = 0
+            }
         }
-        self.tabBarController?.selectedIndex = 0
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

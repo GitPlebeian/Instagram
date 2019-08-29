@@ -24,7 +24,6 @@ class PostDetailTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
     
     // MARK: - Custom Functions
@@ -34,6 +33,13 @@ class PostDetailTableViewController: UITableViewController {
         guard let post = post else {return}
         photoImageView.image = post.photo
         tableView.reloadData()
+        PostController.shared.fetchComments(for: post) { (comments) in
+            if comments != nil{
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
     }
     
     func presentAddCommentAlert() {
@@ -46,9 +52,12 @@ class PostDetailTableViewController: UITableViewController {
         let addCommentAction = UIAlertAction(title: "Add", style: .default) { (_) in
             guard let commentText = alertController.textFields?[0].text, let post = self.post, !commentText.isEmpty else {return}
             PostController.shared.addComment(text: commentText, post: post, completion: { (comment) in
-                
+                guard let comment = comment else {return}
+                DispatchQueue.main.async {
+                    post.comments.append(comment)
+                    self.tableView.reloadData()
+                }
             })
-            self.tableView.reloadData()
         }
         
         let cancelCommentAction = UIAlertAction(title: "Cancel", style: .cancel)

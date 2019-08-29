@@ -26,6 +26,7 @@ class PostListTableViewController: UITableViewController {
         super.viewDidLoad()
         postsSearchBar.delegate = self
         tableView.rowHeight = 484
+        fetchPosts()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -33,6 +34,18 @@ class PostListTableViewController: UITableViewController {
         resultsArray = PostController.shared.posts
         tableView.reloadData()
         
+    }
+    
+    // MARK: - Custom Functions
+    
+    func fetchPosts() {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        PostController.shared.fetchPosts { (posts) in
+            DispatchQueue.main.async {
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                self.tableView.reloadData()
+            }
+        }
     }
 
     // MARK: - Table view data source
