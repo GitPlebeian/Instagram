@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CloudKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +16,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        checkAccountStatus { (success) in
+            let userIcloudStatus = success ? "Good Icloud Account" : "Bad Icloud Account"
+            print(userIcloudStatus)
+        }
         return true
     }
 
@@ -41,6 +45,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
+    func checkAccountStatus(completion: @escaping (Bool) -> Void) {
+        CKContainer.default().accountStatus { (status, error) in
+            if let error = error {
+                print("Error checking accountStatus \(error) \(error.localizedDescription)")
+                completion(false); return
+            } else {
+                DispatchQueue.main.async {
+                    let tabBarController = self.window?.rootViewController
+                    let alertTitle = "Sign in to iCloud in settings"
+                    
+                    switch status {
+                    case .available:
+                        completion(true);
+                    case .noAccount:
+                        tabBarController?.presentSimpleAlertWith(title: alertTitle, message: "No Account Available")
+                        completion(false)
+                    case .couldNotDetermine:
+                        tabBarController?.presentSimpleAlertWith(title: alertTitle, message: "Unknown Account Type")
+                        completion(false)
+                    case .restricted:
+                        tabBarController?.presentSimpleAlertWith(title: alertTitle, message: "ICloud Account is Restricted")
+                        completion(false)
+                    @unknown default:
+                        print("Unknow Default")
+                    }
+                }
+            }
+        }
+    }
 }
 

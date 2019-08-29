@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		86395CE623170E1A003AFD08 /* SearchableRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86395CE523170E1A003AFD08 /* SearchableRecord.swift */; };
+		86395CE823172166003AFD08 /* PhotoSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86395CE723172166003AFD08 /* PhotoSelectorViewController.swift */; };
+		86395CEC23172AEF003AFD08 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86395CEB23172AEF003AFD08 /* CloudKit.framework */; };
+		86395CF623186A40003AFD08 /* SimpleAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86395CF523186A40003AFD08 /* SimpleAlert.swift */; };
 		866877202315C0FE00579309 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8668771F2315C0FE00579309 /* AppDelegate.swift */; };
 		866877252315C0FE00579309 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 866877232315C0FE00579309 /* Main.storyboard */; };
 		866877272315C0FF00579309 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 866877262315C0FF00579309 /* Assets.xcassets */; };
@@ -22,6 +26,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		86395CE523170E1A003AFD08 /* SearchableRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchableRecord.swift; sourceTree = "<group>"; };
+		86395CE723172166003AFD08 /* PhotoSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectorViewController.swift; sourceTree = "<group>"; };
+		86395CE923172AEA003AFD08 /* PhotoBoi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PhotoBoi.entitlements; sourceTree = "<group>"; };
+		86395CEB23172AEF003AFD08 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		86395CF523186A40003AFD08 /* SimpleAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleAlert.swift; sourceTree = "<group>"; };
 		8668771C2315C0FE00579309 /* PhotoBoi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoBoi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8668771F2315C0FE00579309 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		866877242315C0FE00579309 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -43,17 +52,35 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86395CEC23172AEF003AFD08 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		86395CE423170E03003AFD08 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				86395CE523170E1A003AFD08 /* SearchableRecord.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		86395CEA23172AEF003AFD08 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				86395CEB23172AEF003AFD08 /* CloudKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		866877132315C0FE00579309 = {
 			isa = PBXGroup;
 			children = (
 				8668771E2315C0FE00579309 /* PhotoBoi */,
 				8668771D2315C0FE00579309 /* Products */,
+				86395CEA23172AEF003AFD08 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -68,6 +95,8 @@
 		8668771E2315C0FE00579309 /* PhotoBoi */ = {
 			isa = PBXGroup;
 			children = (
+				86395CE923172AEA003AFD08 /* PhotoBoi.entitlements */,
+				86395CE423170E03003AFD08 /* Protocols */,
 				8668773F2315C7A300579309 /* Model Controllers */,
 				8668773A2315C46200579309 /* Models */,
 				866877322315C1C800579309 /* UI */,
@@ -103,6 +132,7 @@
 				866877342315C33F00579309 /* PostListTableViewController.swift */,
 				866877362315C3E700579309 /* PostDetailTableViewController.swift */,
 				866877382315C42E00579309 /* AddPostTableViewController.swift */,
+				86395CE723172166003AFD08 /* PhotoSelectorViewController.swift */,
 				866877422315C98B00579309 /* Custom Cells */,
 			);
 			path = "View Controllers";
@@ -137,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				866877462315D0FA00579309 /* Date Helper */,
+				86395CF523186A40003AFD08 /* SimpleAlert.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -181,6 +212,14 @@
 				TargetAttributes = {
 					8668771B2315C0FE00579309 = {
 						CreatedOnToolsVersion = 10.2.1;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -220,10 +259,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86395CE623170E1A003AFD08 /* SearchableRecord.swift in Sources */,
 				866877202315C0FE00579309 /* AppDelegate.swift in Sources */,
+				86395CE823172166003AFD08 /* PhotoSelectorViewController.swift in Sources */,
 				8668773E2315C6E200579309 /* Comment.swift in Sources */,
 				866877352315C33F00579309 /* PostListTableViewController.swift in Sources */,
 				866877442315C9B200579309 /* PostTableViewCell.swift in Sources */,
+				86395CF623186A40003AFD08 /* SimpleAlert.swift in Sources */,
 				866877392315C42E00579309 /* AddPostTableViewController.swift in Sources */,
 				866877412315C7B300579309 /* PostController.swift in Sources */,
 				866877482315D10900579309 /* DateHelper.swift in Sources */,
@@ -374,6 +416,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = PhotoBoi/PhotoBoi.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2WP5X762NJ;
 				INFOPLIST_FILE = "$(SRCROOT)/PhotoBoi/Resources/Info.plist";
@@ -392,6 +435,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = PhotoBoi/PhotoBoi.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2WP5X762NJ;
 				INFOPLIST_FILE = "$(SRCROOT)/PhotoBoi/Resources/Info.plist";
